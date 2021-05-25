@@ -1,6 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
+    :root {
+        --grey-app {
+            color: #7D7D80;
+        }
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
     
     * {
@@ -16,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
         -moz-osx-font-smoothing: grayscale;
     }
 
-    #root {
+    body {
         background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
     }
     
@@ -27,5 +34,7 @@ const GlobalStyle = createGlobalStyle`
     a {
         text-decoration: none;
     }
+
+   
 `;
 export default GlobalStyle;
