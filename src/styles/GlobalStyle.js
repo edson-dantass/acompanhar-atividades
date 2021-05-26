@@ -1,15 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-
-    :root {
-        --grey-app {
-            color: #7D7D80;
-        }
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-    
     * {
         margin: 0;
         padding: 0;
@@ -17,9 +8,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     html, body, #root {
-        font-family: "Roboto" sans-serif;
+        font-family: "Roboto";
         height: 100%;
-        -webkit-font-smoothing: antialiased;
+        -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale;
     }
 
@@ -34,6 +25,8 @@ const GlobalStyle = createGlobalStyle`
     a {
         text-decoration: none;
     }
+
+ 
 
    
 `;

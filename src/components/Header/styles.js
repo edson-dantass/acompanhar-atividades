@@ -6,7 +6,7 @@ export const Container = styled.ul`
   height: 60px;
   left: 0;
   top: 0;
-  background: rgba(235, 236, 240, 0.5);
+  background: rgba(28, 42, 98, 0.2);
   border-radius: 0px 0px 6px 6px;
 
   display: flex;
@@ -21,24 +21,26 @@ export const Container = styled.ul`
       transition: 0.3s ease;
       border: solid transparent 2px;
       padding: 0.5em 0.5em 0.5em 2em;
-      border-radius: 4px;
-      background: #fff;
+      background: #e2e4e6;
+      opacity: 0.85;
+      border-radius: 6px;
       min-width: 20em;
       outline: none;
-      color: #7d7d80;
+      color: #454c59;
 
       &:focus {
-        border: solid #3a47d5 2px;
+        border: solid #454c59 2px;
       }
       &::placeholder {
-        color: #7d7d80;
+        color: #454c59;
       }
     }
     svg {
       top: 0.5em;
       left: 0.5em;
       position: absolute;
-      color: #7d7d80;
+      color: #454c59;
+      z-index: 1;
     }
   }
 

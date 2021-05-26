@@ -1,24 +1,53 @@
 import React from "react";
 import Header from "../Header";
-import { Container, Column } from "./styles";
-import { IoAdd } from "react-icons/io5";
+import { Container } from "./styles";
+import Column from "../Column";
+import Card from "../Card";
+
+// Painel principal com colunas e cards
 
 const Painel = () => {
   return (
     <>
       <Header />
       <Container>
-        <Column>
-          <div className="column-header">
-            <h2>Planejamento</h2>
-          </div>
-          <div className="colum-body"></div>
-          <div className="colum-footer">
-            <button>
-              Nova atividade <IoAdd />
-            </button>
-          </div>
+        <Column options={{ groupName: "Em planejamento" }}>
+          <Card
+            options={{ cardDescription: "Fazer dashboard", date: "3 de junho" }}
+          />
+          <Card
+            options={{
+              cardDescription: "cadastro de clientes",
+              date: "4 de junho",
+            }}
+          />
         </Column>
+        <Column
+          options={{ groupName: "Em desenvolvimento", date: "3 de julho" }}
+        >
+          <Card
+            options={{ cardDescription: "Tela de login", date: "10 de julho" }}
+          />
+          <Card
+            options={{
+              cardDescription: "Blog",
+              cardTagColor: "red",
+              date: "3 de maio",
+            }}
+          />
+          <Card
+            options={{
+              cardDescription: "Cadastro de usuários",
+              cardTagColor: "red",
+              date: "20 de maio",
+            }}
+          />
+          <Card options={{ cardDescription: "Perfil", cardTagColor: "" }} />
+          <Card options={{ cardDescription: "Carrinho", cardTagColor: "" }} />
+        </Column>
+        <div>
+          <button>Novo Grupo</button>
+        </div>
       </Container>
     </>
   );
