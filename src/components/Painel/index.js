@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Header";
 import { Container } from "./styles";
-import Column from "../Column";
+import Group from "../Group";
 import Card from "../Card";
 
 // Painel principal com colunas e cards
@@ -11,7 +11,7 @@ const Painel = () => {
     <>
       <Header />
       <Container>
-        <Column options={{ groupName: "Em planejamento" }}>
+        <Group options={{ groupName: "Em planejamento" }}>
           <Card
             options={{ cardDescription: "Fazer dashboard", date: "3 de junho" }}
           />
@@ -21,8 +21,8 @@ const Painel = () => {
               date: "4 de junho",
             }}
           />
-        </Column>
-        <Column
+        </Group>
+        <Group
           options={{ groupName: "Em desenvolvimento", date: "3 de julho" }}
         >
           <Card
@@ -44,7 +44,7 @@ const Painel = () => {
           />
           <Card options={{ cardDescription: "Perfil", cardTagColor: "" }} />
           <Card options={{ cardDescription: "Carrinho", cardTagColor: "" }} />
-        </Column>
+        </Group>
         <div>
           <button>Novo Grupo</button>
         </div>

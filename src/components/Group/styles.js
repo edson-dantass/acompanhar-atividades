@@ -8,14 +8,14 @@ export const Container = styled.div`
   flex-basis: 320px;
   flex-grow: 0;
   border-radius: 6px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 115px);
   height: fit-content;
 
   & + & {
     margin-left: 2em;
   }
 
-  .column-header {
+  .group-header {
     padding: 1em 0.6em;
     h2 {
       color: #7d7d80;
@@ -25,12 +25,12 @@ export const Container = styled.div`
       font-size: 18px;
     }
   }
-  .column-body {
+  .group-body {
     padding: 0 0.5em;
     overflow-y: auto;
     max-height: calc(100vh - 224px);
   }
-  .column-footer {
+  .group-footer {
     padding: 1em 0.6em;
 
     button {

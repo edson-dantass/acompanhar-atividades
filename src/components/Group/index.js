@@ -10,16 +10,16 @@ import { Container } from "./styles";
  * @param {String} props.options.buttonName (Opcional) Nome do botão que irá aparecer no footer da Coluna
  */
 
-const Column = ({ children, options }) => {
+const Group = ({ children, options }) => {
   const { groupName, buttonName } = options || {};
 
   return (
     <Container>
-      <div className="column-header">
+      <div className="group-header">
         <h2>{groupName}</h2>
       </div>
-      <div className="column-body">{children}</div>
-      <div className="column-footer">
+      <div className="group-body">{children}</div>
+      <div className="group-footer">
         <button>
           {buttonName !== "" && "Nova atividade"} <IoAdd />
         </button>
@@ -28,4 +28,4 @@ const Column = ({ children, options }) => {
   );
 };
 
-export default Column;
+export default Group;
