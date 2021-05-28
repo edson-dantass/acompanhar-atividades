@@ -14,9 +14,9 @@ export const Container = styled.div`
   user-select: none;
   -webkit-user-drag: element !important;
   border: solid transparent 2px;
+  transition: all 0.2s;
 
-  ${(props) =>
-    props.isDragging && ` box-shadow:none; background-color: #ebecf0; border: dashed 2px #b3b3b3;`}
+  ${(props) => props.isDragging && ` box-shadow:none; background-color: #ebecf0; border: dashed 2px #b3b3b3;`}
   margin-bottom: 1em;
   .card-body {
     ${(props) => props.isDragging && `opacity: 0;`}

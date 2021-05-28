@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  IoSearch,
-  IoExitOutline,
-  IoNotificationsOutline,
-} from "react-icons/io5";
+import { IoSearch, IoExitOutline, IoNotificationsOutline } from "react-icons/io5";
 
 import { Container } from "./styles";
 
@@ -15,12 +11,12 @@ const Header = () => {
         <input type="search" name="buscar" placeholder="Buscar" />
       </li>
       <li className="actions-container">
-        <a href="#">
+        <span>
           <IoNotificationsOutline />
-        </a>
-        <a href="#">
+        </span>
+        <span>
           <IoExitOutline />
-        </a>
+        </span>
       </li>
     </Container>
   );

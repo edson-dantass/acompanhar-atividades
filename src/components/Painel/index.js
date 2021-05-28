@@ -6,6 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { loadGroups } from "../../services/api";
 import PainelContext from "./context";
+import immer from "immer";
 
 // Painel principal com colunas e cards
 
@@ -13,8 +14,15 @@ const Painel = () => {
   const data = loadGroups();
   const [groups, setGroups] = React.useState(data);
 
-  function moveCard(from, to) {
-    console.log(from, to);
+  function moveCard(groupIndex, from, to) {
+    setGroups(
+      immer(groups, (draft) => {
+        const currentCardDragged = draft[groupIndex].groupCards[from];
+
+        draft[groupIndex].groupCards.splice(from, 1);
+        draft[groupIndex].groupCards.splice(to, 0, currentCardDragged);
+      })
+    );
   }
 
   return (
@@ -23,7 +31,7 @@ const Painel = () => {
       <PainelContext.Provider value={{ moveCard, groups }}>
         <Container>
           {groups?.map((group, i) => (
-            <Group key={i} data={group} />
+            <Group key={i} data={group} groupIndex={i} />
           ))}
         </Container>
       </PainelContext.Provider>

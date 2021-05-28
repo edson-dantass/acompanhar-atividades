@@ -14,14 +14,14 @@ import PainelContext from "../Painel/context";
  * @param {Number} props.options.index índice do array
  */
 
-const Card = ({ data, index }) => {
+const Card = ({ data, index, groupIndex }) => {
   const { cardDescription, cardTagColor, date } = data || {};
   const ref = React.useRef();
   const { moveCard } = React.useContext(PainelContext);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "CARD",
-    item: { type: "CARD", index },
+    item: { type: "CARD", index, groupIndex },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -36,8 +36,21 @@ const Card = ({ data, index }) => {
       if (cardDragging === cardDown) {
         return;
       }
+      const targetSize = ref.current.getBoundingClientRect();
+      const targetCenter = (targetSize.bottom - targetSize.top) / 2;
 
-      moveCard(cardDragging, cardDown);
+      const offset = monitor.getClientOffset();
+      const dragPosition = offset.y - targetSize.top;
+
+      if (cardDragging < cardDown && dragPosition < targetCenter) {
+        return;
+      }
+      if (cardDragging > cardDown && dragPosition > targetCenter) {
+        return;
+      }
+
+      moveCard(groupIndex, cardDragging, cardDown);
+      item.index = cardDown;
     },
   });
 

@@ -12,7 +12,7 @@ import Card from "../Card";
  * @param {Array} props.options.groupCards Vetor de cards
  */
 
-const Group = ({ data }) => {
+const Group = ({ data, groupIndex }) => {
   const { groupName, buttonName = "Novo", groupCards } = data || {};
 
   return (
@@ -22,7 +22,7 @@ const Group = ({ data }) => {
       </div>
       <div className="group-body">
         {groupCards.map((card, index) => (
-          <Card key={card.id} data={card} index={index} />
+          <Card key={card.id} data={card} index={index} groupIndex={groupIndex} />
         ))}
       </div>
       <div className="group-footer">
