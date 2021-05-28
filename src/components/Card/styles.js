@@ -1,17 +1,28 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: #fff;
+  background-color: #fff;
   color: #4b4b4d;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
-  width: 100%;
+  width: 300px;
   height: auto;
   padding: 0.8em 0.5em;
   cursor: grab;
-  margin-bottom: 1em;
+  appearance: none;
+  position: relative;
+  user-select: none;
+  -webkit-user-drag: element !important;
+  border: solid transparent 2px;
 
+  ${(props) =>
+    props.isDragging && ` box-shadow:none; background-color: #ebecf0; border: dashed 2px #b3b3b3;`}
+  margin-bottom: 1em;
+  .card-body {
+    ${(props) => props.isDragging && `opacity: 0;`}
+  }
   .card-footer {
+    ${(props) => props.isDragging && `opacity: 0;`}
     margin-top: 1em;
     .tag-time {
       font-size: 0.9em;

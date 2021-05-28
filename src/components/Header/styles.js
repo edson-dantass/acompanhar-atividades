@@ -30,6 +30,8 @@ export const Container = styled.ul`
 
       &:focus {
         border: solid #454c59 2px;
+        background-color: #fff;
+        opacity: 1;
       }
       &::placeholder {
         color: #454c59;

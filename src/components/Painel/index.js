@@ -1,55 +1,33 @@
 import React from "react";
 import Header from "../Header";
-import { Container } from "./styles";
 import Group from "../Group";
-import Card from "../Card";
+import { Container } from "./styles";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import { loadGroups } from "../../services/api";
+import PainelContext from "./context";
 
 // Painel principal com colunas e cards
 
 const Painel = () => {
+  const data = loadGroups();
+  const [groups, setGroups] = React.useState(data);
+
+  function moveCard(from, to) {
+    console.log(from, to);
+  }
+
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <Header />
-      <Container>
-        <Group options={{ groupName: "Em planejamento" }}>
-          <Card
-            options={{ cardDescription: "Fazer dashboard", date: "3 de junho" }}
-          />
-          <Card
-            options={{
-              cardDescription: "cadastro de clientes",
-              date: "4 de junho",
-            }}
-          />
-        </Group>
-        <Group
-          options={{ groupName: "Em desenvolvimento", date: "3 de julho" }}
-        >
-          <Card
-            options={{ cardDescription: "Tela de login", date: "10 de julho" }}
-          />
-          <Card
-            options={{
-              cardDescription: "Blog",
-              cardTagColor: "red",
-              date: "3 de maio",
-            }}
-          />
-          <Card
-            options={{
-              cardDescription: "Cadastro de usuários",
-              cardTagColor: "red",
-              date: "20 de maio",
-            }}
-          />
-          <Card options={{ cardDescription: "Perfil", cardTagColor: "" }} />
-          <Card options={{ cardDescription: "Carrinho", cardTagColor: "" }} />
-        </Group>
-        <div>
-          <button>Novo Grupo</button>
-        </div>
-      </Container>
-    </>
+      <PainelContext.Provider value={{ moveCard, groups }}>
+        <Container>
+          {groups?.map((group, i) => (
+            <Group key={i} data={group} />
+          ))}
+        </Container>
+      </PainelContext.Provider>
+    </DndProvider>
   );
 };
 

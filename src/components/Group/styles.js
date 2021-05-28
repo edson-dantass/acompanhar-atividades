@@ -10,6 +10,7 @@ export const Container = styled.div`
   border-radius: 6px;
   max-height: calc(100vh - 115px);
   height: fit-content;
+  user-select: none;
 
   & + & {
     margin-left: 2em;
@@ -26,7 +27,10 @@ export const Container = styled.div`
     }
   }
   .group-body {
-    padding: 0 0.5em;
+    min-height: 200px;
+    padding: 0.5em;
+    /* background: #d9dcff; */
+    border-radius: 2px;
     overflow-y: auto;
     max-height: calc(100vh - 224px);
   }
