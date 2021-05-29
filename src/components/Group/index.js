@@ -46,7 +46,7 @@ const Group = ({ data, groupIndex }) => {
       </div>
       <div className="group-footer">
         <button>
-          {buttonName} <IoAdd />
+          <IoAdd /> {buttonName}
         </button>
       </div>
     </Container>

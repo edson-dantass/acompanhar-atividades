@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background: #ebecf0;
-  margin: 1em 0em;
+  margin: 1em 1em 1em 0;
   padding: 0 0.5em;
   flex-shrink: 0;
   flex-basis: 332px;
@@ -11,9 +11,19 @@ export const Container = styled.div`
   max-height: calc(100vh - 115px);
   height: fit-content;
   user-select: none;
+  position: relative;
 
+  &::before {
+    content: "";
+    width: 0.2em;
+    height: 100%;
+    border-radius: 0.5em;
+    position: absolute;
+    background: #ffffff33;
+    right: -1.2em;
+  }
   & + & {
-    margin-left: 2em;
+    margin: 1em;
   }
 
   .group-header {
@@ -57,7 +67,7 @@ export const Container = styled.div`
       }
 
       svg {
-        margin-left: 0.5em;
+        margin-right: 0.5em;
         font-size: 1.4em;
         color: #7d7d80;
       }

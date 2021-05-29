@@ -54,6 +54,7 @@ const Card = ({ data, groupIndex, cardIndex }) => {
 
       moveCardCurrentGroupe(indexCardDragging, indexCardDownDragging, groupIndex);
       item.cardIndex = indexCardDownDragging;
+      item.groupIndex = indexCardDragging;
     },
   });
   dragRef(dropRef(ref));
