@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Header";
 import Group from "../Group";
-import { Container } from "./styles";
+import { Container, AddContainer } from "./styles";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { loadGroups } from "../../services/api";
@@ -14,13 +14,28 @@ const Painel = () => {
   const data = loadGroups();
   const [groups, setGroups] = React.useState(data);
 
-  function moveCard(groupIndex, from, to) {
+  function moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging) {
     setGroups(
       immer(groups, (draft) => {
-        const currentCardDragged = draft[groupIndex].groupCards[from];
+        const currentCard = draft[indexGroupCurrent].groupCards[indexCardDragging];
 
-        draft[groupIndex].groupCards.splice(from, 1);
-        draft[groupIndex].groupCards.splice(to, 0, currentCardDragged);
+        draft[indexGroupCurrent].groupCards.splice(indexCardDragging, 1);
+
+        const localInsert = draft[indexGroupLocalCardDragging].groupCards.length;
+
+        draft[indexGroupLocalCardDragging].groupCards.splice(localInsert, 0, currentCard);
+      })
+    );
+  }
+
+  function moveCardCurrentGroupe(indexCardDragging, indexCardDownDragging, groupIndex) {
+    setGroups(
+      immer(groups, (draft) => {
+        const currentCard = draft[groupIndex].groupCards[indexCardDragging];
+
+        draft[groupIndex].groupCards.splice(indexCardDragging, 1);
+
+        draft[groupIndex].groupCards.splice(indexCardDownDragging, 0, currentCard);
       })
     );
   }
@@ -28,11 +43,14 @@ const Painel = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Header />
-      <PainelContext.Provider value={{ moveCard, groups }}>
+      <PainelContext.Provider value={{ moveCard, moveCardCurrentGroupe, groups }}>
         <Container>
           {groups?.map((group, i) => (
-            <Group key={i} data={group} groupIndex={i} />
+            <Group key={group.id} data={group} groupIndex={i} />
           ))}
+          <AddContainer>
+            <button>ok</button>
+          </AddContainer>
         </Container>
       </PainelContext.Provider>
     </DndProvider>

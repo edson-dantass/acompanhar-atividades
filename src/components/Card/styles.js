@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: #fff;
   color: #4b4b4d;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 6px 6px rgb(0 0 0 / 5%);
   border-radius: 4px;
   width: 300px;
   height: auto;

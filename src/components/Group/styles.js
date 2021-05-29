@@ -5,7 +5,7 @@ export const Container = styled.div`
   margin: 1em 0em;
   padding: 0 0.5em;
   flex-shrink: 0;
-  flex-basis: 320px;
+  flex-basis: 332px;
   flex-grow: 0;
   border-radius: 6px;
   max-height: calc(100vh - 115px);

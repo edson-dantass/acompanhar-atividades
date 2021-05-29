@@ -2,6 +2,8 @@ import React from "react";
 import { IoAdd } from "react-icons/io5";
 import { Container } from "./styles";
 import Card from "../Card";
+import { useDrop } from "react-dnd";
+import PainelContext from "../Painel/context";
 
 /**
  *
@@ -14,15 +16,32 @@ import Card from "../Card";
 
 const Group = ({ data, groupIndex }) => {
   const { groupName, buttonName = "Novo", groupCards } = data || {};
+  const { moveCard } = React.useContext(PainelContext);
+
+  const [, dropRef] = useDrop({
+    accept: "CARD",
+    hover(item, monitor) {
+      const indexGroupCurrent = item.groupIndex;
+      const indexGroupLocalCardDragging = groupIndex;
+      const indexCardDragging = item.cardIndex;
+
+      if (indexGroupCurrent === indexGroupLocalCardDragging) {
+        return;
+      }
+
+      moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging);
+      item.groupIndex = groupIndex;
+    },
+  });
 
   return (
     <Container>
       <div className="group-header">
         <h2>{groupName}</h2>
       </div>
-      <div className="group-body">
+      <div className="group-body" ref={dropRef}>
         {groupCards.map((card, index) => (
-          <Card key={card.id} data={card} index={index} groupIndex={groupIndex} />
+          <Card key={card.id} data={card} groupIndex={groupIndex} cardIndex={index} />
         ))}
       </div>
       <div className="group-footer">

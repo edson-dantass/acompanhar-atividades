@@ -14,14 +14,13 @@ import PainelContext from "../Painel/context";
  * @param {Number} props.options.index índice do array
  */
 
-const Card = ({ data, index, groupIndex }) => {
+const Card = ({ data, groupIndex, cardIndex }) => {
   const { cardDescription, cardTagColor, date } = data || {};
-  const ref = React.useRef();
-  const { moveCard } = React.useContext(PainelContext);
-
+  const ref = React.useRef(null);
+  const { moveCardCurrentGroupe } = React.useContext(PainelContext);
   const [{ isDragging }, dragRef] = useDrag({
     type: "CARD",
-    item: { type: "CARD", index, groupIndex },
+    item: { type: "CARD", groupIndex, cardIndex },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -30,31 +29,34 @@ const Card = ({ data, index, groupIndex }) => {
   const [, dropRef] = useDrop({
     accept: "CARD",
     hover(item, monitor) {
-      const cardDragging = item.index;
-      const cardDown = index;
+      const indexCardDragging = item.cardIndex;
+      const indexCardDownDragging = cardIndex;
 
-      if (cardDragging === cardDown) {
-        return;
-      }
-      const targetSize = ref.current.getBoundingClientRect();
-      const targetCenter = (targetSize.bottom - targetSize.top) / 2;
-
-      const offset = monitor.getClientOffset();
-      const dragPosition = offset.y - targetSize.top;
-
-      if (cardDragging < cardDown && dragPosition < targetCenter) {
-        return;
-      }
-      if (cardDragging > cardDown && dragPosition > targetCenter) {
+      if (indexCardDragging === indexCardDownDragging) {
         return;
       }
 
-      moveCard(groupIndex, cardDragging, cardDown);
-      item.index = cardDown;
+      const hoverBoundingRect = ref?.current.getBoundingClientRect();
+
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      const clientOffset = monitor.getClientOffset();
+
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (indexCardDragging < indexCardDownDragging && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Dragging upwards
+      if (indexCardDragging > indexCardDownDragging && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      moveCardCurrentGroupe(indexCardDragging, indexCardDownDragging, groupIndex);
+      item.cardIndex = indexCardDownDragging;
     },
   });
-
-  dropRef(dragRef(ref));
+  dragRef(dropRef(ref));
   return (
     <>
       <Container ref={ref} isDragging={isDragging}>
