@@ -20,22 +20,15 @@ const Group = ({ data, groupIndex }) => {
 
   const [, dropRef] = useDrop({
     accept: "CARD",
-    hover(item, monitor) {
-      const indexGroupCurrent = item.groupIndex;
-      const indexGroupLocalCardDragging = groupIndex;
-      const indexCardDragging = item.cardIndex;
-
-      if (indexGroupCurrent === indexGroupLocalCardDragging) {
-        return;
-      }
-
-      moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging);
-      item.groupIndex = groupIndex;
-    },
+    drop: (item, monitor) => ({
+      indexGroupCurrent: item.groupIndex,
+      indexCardDragging: item.cardIndex,
+      indexGroupLocalCardDragging: groupIndex,
+    }),
   });
 
   return (
-    <Container>
+    <Container ref={dropRef}>
       <div className="group-header">
         <h2>{groupName}</h2>
       </div>

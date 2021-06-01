@@ -43,6 +43,22 @@ export const Container = styled.div`
     border-radius: 2px;
     overflow-y: auto;
     max-height: calc(100vh - 224px);
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #0000001c;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      border-radius: 1em;
+      background: #00000035;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #838383;
+    }
   }
   .group-footer {
     padding: 1em 0.6em;
