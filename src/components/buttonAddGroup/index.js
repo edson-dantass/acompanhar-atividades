@@ -6,7 +6,7 @@ import PainelContext from "../Painel/context";
 
 const ButtonAddGroup = () => {
   const [button, setButton] = React.useState(true);
-  const { groups, setGroups } = React.useContext(PainelContext);
+  const { setGroups } = React.useContext(PainelContext);
 
   const inputRef = React.useRef();
   const buttonRef = React.useRef();
@@ -25,17 +25,16 @@ const ButtonAddGroup = () => {
   }
 
   async function handleKey(event) {
+    // Verifica se a tecla apertada foi "Enter"
     if (event.which === 13) {
+      // Verifica se campo de novo grupo está vazio
       if (inputRef?.current.value !== "") {
-        const response = await create("/grupo", {
+        await create("/grupo", {
           nome: inputRef?.current.value,
         });
-
-        console.log(response);
         setButton(!button);
         handleClickAddGroup();
         inputRef.current.value = "";
-
         async function getGroups() {
           const response = await index("/grupos");
           if (response) {

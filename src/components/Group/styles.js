@@ -28,12 +28,70 @@ export const Container = styled.div`
 
   .group-header {
     padding: 1em 0.6em;
-    h2 {
-      color: #7d7d80;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
+    .group-header-name {
+      h2 {
+        color: #7d7d80;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        ${(props) => props.inputName && `display: none;`}
+      }
+      input {
+        background: #fff;
+        border: solid #bebebe 2px;
+        outline: none;
+        border-radius: 4px;
+        padding: 0.2em 0.5em;
+        ${(props) =>
+          !props.inputName &&
+          `
+          position: absolute;     
+          appearance: none;
+          border: none;
+          width: 0;
+          height: 0;
+          padding: 0;
+        `}
+        ${(props) =>
+          props.inputName &&
+          `
+           &:focus {
+            border: solid #7e7e81 2px;
+          }
+        `}
+      }
+    }
+    .group-header-actions {
+      display: flex;
+      align-items: center;
+      align-self: flex-start;
+      .action {
+        background-color: transparent;
+        padding: 0.2em;
+        cursor: pointer;
+        border-radius: 0.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.25s;
+        margin: 0 !important;
+
+        &:hover {
+          background: #dadada;
+        }
+
+        svg {
+          font-size: 1.2em;
+          color: #4f4f4f;
+        }
+        svg.red {
+          color: #da3d3d;
+        }
+      }
     }
   }
   .group-body {
