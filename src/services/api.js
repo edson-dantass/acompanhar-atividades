@@ -34,3 +34,21 @@ export async function create(route, data) {
     return null;
   }
 }
+
+export async function update(route, data) {
+  try {
+    const response = await axios.put(
+      API_URL + route,
+      {
+        ...data,
+      },
+      {
+        headers: API_OPTIONS,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    return null;
+  }
+}

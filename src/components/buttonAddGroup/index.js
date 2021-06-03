@@ -35,13 +35,11 @@ const ButtonAddGroup = () => {
         setButton(!button);
         handleClickAddGroup();
         inputRef.current.value = "";
-        async function getGroups() {
-          const response = await index("/grupos");
-          if (response) {
-            setGroups(response.data);
-          }
+
+        const response = await index("/grupos");
+        if (response) {
+          setGroups(response.data);
         }
-        getGroups();
       } else {
         setButton(!button);
         handleClickAddGroup();

@@ -3,6 +3,8 @@ import { IoAdd, IoTrashOutline, IoCreateOutline, IoCheckmarkOutline } from "reac
 import { Container } from "./styles";
 import Card from "../Card";
 import { useDrop } from "react-dnd";
+import { update, index } from "../../services/api";
+import PainelContext from "../Painel/context";
 
 /**
  *
@@ -16,6 +18,7 @@ const Group = ({ data, groupIndex }) => {
   const { nome: groupName, atividade: groupCards } = data || {};
   const [inputName, setInputName] = React.useState(false);
   const inputRef = React.useRef();
+  const { setGroups } = React.useContext(PainelContext);
 
   const [, dropRef] = useDrop({
     accept: "CARD",
@@ -26,16 +29,33 @@ const Group = ({ data, groupIndex }) => {
     }),
   });
 
-  function handleEditNameGroup() {
-    inputRef.current.focus();
-    inputRef.current.value = "";
-    setInputName(!inputName);
+  async function handleEditNameGroup() {
+    if (inputRef.current.value !== "") {
+      await update("/grupo", {
+        id: data.id,
+        nome: inputRef.current.value,
+      });
+      const response = await index("/grupos");
+      if (response) {
+        setGroups(response.data);
+      }
+      inputRef.current.value = "";
+      handleEditNameGroup();
+    } else {
+      inputRef.current.focus();
+      setInputName(!inputName);
+    }
+  }
+  function handlePressEditName(event) {
+    if (event.which === 13) {
+      handleEditNameGroup();
+    }
   }
   return (
     <Container inputName={inputName} ref={dropRef}>
       <div className="group-header">
         <div className="group-header-name">
-          <input ref={inputRef} type="text" placeholder="Editar nome do grupo" />
+          <input ref={inputRef} type="text" placeholder="Editar nome do grupo" onKeyPress={handlePressEditName} />
           <h2>{groupName}</h2>
         </div>
         <div className="group-header-actions">
