@@ -3,20 +3,17 @@ import { IoAdd } from "react-icons/io5";
 import { Container } from "./styles";
 import Card from "../Card";
 import { useDrop } from "react-dnd";
-import PainelContext from "../Painel/context";
 
 /**
  *
  * @param {Object} props
  * @param {Object} props.options
  * @param {String} props.options.groupName Nome do grupo que irá aparecer no header da Coluna
- * @param {String} props.options.buttonName (Opcional) Nome do botão que irá aparecer no footer da Coluna
  * @param {Array} props.options.groupCards Vetor de cards
  */
 
 const Group = ({ data, groupIndex }) => {
-  const { groupName, buttonName = "Novo", groupCards } = data || {};
-  const { moveCard } = React.useContext(PainelContext);
+  const { nome: groupName, atividade: groupCards } = data || {};
 
   const [, dropRef] = useDrop({
     accept: "CARD",
@@ -39,7 +36,7 @@ const Group = ({ data, groupIndex }) => {
       </div>
       <div className="group-footer">
         <button>
-          <IoAdd /> {buttonName}
+          <IoAdd /> Nova Atividade
         </button>
       </div>
     </Container>

@@ -33,7 +33,7 @@ const Card = ({ data, groupIndex, cardIndex }) => {
       // Verifica se o usuário soltou o Card em uma área de drop
       if (propsResult) {
         const { indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging } = propsResult;
-        /* Evita disparar a função MoveCard() quando se arasta por cima de outro card, pois esta função é apenas
+        /* Evita disparar a função MoveCard() quando se arrasta por cima de outro card, pois esta função é apenas
         responsável por soltar Cards dentro de grupos e não cards por cima de cards. */
         if (indexGroupCurrent === indexGroupLocalCardDragging) {
           return;

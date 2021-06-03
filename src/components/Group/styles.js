@@ -62,6 +62,7 @@ export const Container = styled.div`
   }
   .group-footer {
     padding: 1em 0.6em;
+    margin: 0 !important;
 
     button {
       background: none;

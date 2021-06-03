@@ -16,8 +16,7 @@ export const Container = styled.div`
     padding: 0.5em;
     font-weight: 500;
     color: #ffffff;
-    margin-left: 1.5em;
-
+    ${(props) => (props.button ? ` display:  block;` : ` display: none;`)}
     ${(props) => (props.button ? ` background: #17134e38;` : ` background: #fff;`)}
 
     outline: none;
@@ -25,6 +24,8 @@ export const Container = styled.div`
       ${(props) => (props.button ? ` background: #17134e59;` : ` background: #fff;`)}
     }
 
+    .field-title {
+    }
     .button-field {
       display: flex;
       justify-content: flex-start;
@@ -34,16 +35,15 @@ export const Container = styled.div`
       font-size: 1.8em;
       margin-right: 0.2em;
     }
-
-    input {
-      display: none;
-      border: solid #7a82de 2px;
-      outline: none;
-      width: 100%;
-      background: white;
-      padding: 0.5em;
-      border-radius: 4px;
-      color: #4b4b4d;
-    }
+  }
+  input {
+    display: none;
+    border: solid #7a82de 2px;
+    outline: none;
+    width: 100%;
+    background: white;
+    padding: 0.5em;
+    border-radius: 4px;
+    color: #4b4b4d;
   }
 `;

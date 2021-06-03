@@ -1,33 +1,36 @@
-export function loadGroups() {
-  return [
-    {
-      id: 0,
-      groupName: "Em planejamento",
-      buttonName: "Novo planejamento ",
-      groupCards: [
-        { id: 0, cardDescription: "Fazer dashboard", date: "3 de junho" },
-        { id: 1, cardDescription: "Fazer Menu", date: "23 de junho" },
-      ],
-    },
-    {
-      id: 1,
-      groupName: "Em desenvolvimento",
-      buttonName: "Novo desenvolvimento",
-      groupCards: [
-        { id: 2, cardDescription: "Footer", date: "30 de maio" },
-        { id: 3, cardDescription: "Header", date: "30 de junho" },
-        { id: 4, cardDescription: "Section de produto", date: "29 de junho", cardTagColor: "red" },
-      ],
-    },
-    {
-      id: 2,
-      groupName: "Finalizado",
-      buttonName: "Novo intem finalizado",
-      groupCards: [
-        { id: 5, cardDescription: "Footer", date: "30 de maio", cardTagColor: "green" },
-        { id: 6, cardDescription: "Header", date: "30 de junho", cardTagColor: "green" },
-        { id: 7, cardDescription: "Section de produto", date: "29 de junho", cardTagColor: "green" },
-      ],
-    },
-  ];
+import axios from "axios";
+
+const API_URL = "http://localhost:8080/api";
+
+const API_OPTIONS = {
+  "Content-Type": "application/json",
+};
+
+export async function index(route) {
+  try {
+    const response = await axios.get(API_URL + route, {
+      headers: API_OPTIONS,
+    });
+
+    return response;
+  } catch (error) {
+    return null;
+  }
+}
+export async function create(route, data) {
+  try {
+    const response = await axios.post(
+      API_URL + route,
+      {
+        ...data,
+      },
+      {
+        headers: API_OPTIONS,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    return null;
+  }
 }

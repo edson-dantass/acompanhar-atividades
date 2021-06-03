@@ -4,16 +4,25 @@ import Group from "../Group";
 import { Container } from "./styles";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { loadGroups } from "../../services/api";
+import { index } from "../../services/api";
 import PainelContext from "./context";
 import immer from "immer";
-import ButtonAddGroup from "../buttonAddGroup";
+import ButtonAddGroup from "../ButtonAddGroup";
 
 // Painel principal com colunas e cards
 
 const Painel = () => {
-  const data = loadGroups();
-  const [groups, setGroups] = React.useState(data);
+  const [groups, setGroups] = React.useState([]);
+
+  React.useEffect(() => {
+    async function getGroups() {
+      const response = await index("/grupos");
+      if (response) {
+        setGroups(response.data);
+      }
+    }
+    getGroups();
+  }, []);
 
   // Função global passada pelo o contexo para mover o Card de um Grupo para o outro.
   function moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging) {
@@ -43,10 +52,11 @@ const Painel = () => {
     );
   }
 
+  console.log(groups);
   return (
     <DndProvider backend={HTML5Backend}>
       <Header />
-      <PainelContext.Provider value={{ moveCard, moveCardCurrentGroupe, groups }}>
+      <PainelContext.Provider value={{ moveCard, moveCardCurrentGroupe, groups, setGroups }}>
         <Container>
           {groups?.map((group, i) => (
             <Group key={group.id} data={group} groupIndex={i} />
