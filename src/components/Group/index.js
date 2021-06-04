@@ -5,6 +5,7 @@ import Card from "../Card";
 import { useDrop } from "react-dnd";
 import { update, index } from "../../services/api";
 import PainelContext from "../Painel/context";
+import { useModal } from "../../Hooks/Modal";
 
 /**
  *
@@ -18,6 +19,7 @@ const Group = ({ data, groupIndex }) => {
   const { nome: groupName, atividade: groupCards } = data || {};
   const [inputName, setInputName] = React.useState(false);
   const inputRef = React.useRef();
+  const { setModal } = useModal();
   const { setGroups } = React.useContext(PainelContext);
 
   const [, dropRef] = useDrop({
@@ -46,39 +48,53 @@ const Group = ({ data, groupIndex }) => {
       setInputName(!inputName);
     }
   }
+
   function handlePressEditName(event) {
     if (event.which === 13) {
       handleEditNameGroup();
     }
   }
   return (
-    <Container inputName={inputName} ref={dropRef}>
-      <div className="group-header">
-        <div className="group-header-name">
-          <input ref={inputRef} type="text" placeholder="Editar nome do grupo" onKeyPress={handlePressEditName} />
-          <h2>{groupName}</h2>
-        </div>
-        <div className="group-header-actions">
-          <div className="action" title="Editar" onClick={handleEditNameGroup}>
-            {!inputName && <IoCreateOutline />}
-            {inputName && <IoCheckmarkOutline />}
+    <>
+      <Container inputName={inputName} ref={dropRef}>
+        <div className="group-header">
+          <div className="group-header-name">
+            <input ref={inputRef} type="text" placeholder={data?.nome} onKeyPress={handlePressEditName} />
+            <h2>{groupName}</h2>
           </div>
-          <div className="action" title="Excluir">
-            <IoTrashOutline className="red" />
+          <div className="group-header-actions">
+            <div className="action" title="Editar" onClick={handleEditNameGroup}>
+              {!inputName && <IoCreateOutline />}
+              {inputName && <IoCheckmarkOutline />}
+            </div>
+            <div className="action" title="Excluir">
+              <IoTrashOutline className="red" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="group-body" ref={dropRef}>
-        {groupCards.map((card, index) => (
-          <Card key={card.id} data={card} groupIndex={groupIndex} cardIndex={index} />
-        ))}
-      </div>
-      <div className="group-footer">
-        <button>
-          <IoAdd /> Nova Atividade
-        </button>
-      </div>
-    </Container>
+        <div className="group-body" ref={dropRef}>
+          {groupCards.map((card, index) => (
+            <Card key={card.id} data={card} groupIndex={groupIndex} cardIndex={index} />
+          ))}
+        </div>
+        <div className="group-footer">
+          <button
+            type="button"
+            onClick={() =>
+              setModal({
+                active: true,
+                typeModal: "CREATE",
+                data: {
+                  id: data?.id,
+                },
+              })
+            }
+          >
+            <IoAdd /> Nova Atividade
+          </button>
+        </div>
+      </Container>
+    </>
   );
 };
 

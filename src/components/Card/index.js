@@ -15,7 +15,7 @@ import PainelContext from "../Painel/context";
  */
 
 const Card = ({ data, groupIndex, cardIndex }) => {
-  const { cardDescription, cardTagColor, date } = data || {};
+  const { nome: cardDescription, cardTagColor, date } = data || {};
   const ref = React.useRef(null);
   const { moveCard, moveCardCurrentGroupe } = React.useContext(PainelContext);
 

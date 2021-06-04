@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  margin: 0 0 1em 0 !important;
   background-color: #fff;
   color: #4b4b4d;
   box-shadow: 0px 6px 6px rgb(0 0 0 / 5%);
@@ -17,7 +18,7 @@ export const Container = styled.div`
   transition: all 0.2s;
 
   ${(props) => props.isDragging && ` box-shadow:none; background-color: #ebecf0; border: dashed 2px #b3b3b3;`}
-  margin-bottom: 1em;
+
   .card-body {
     ${(props) => props.isDragging && `opacity: 0;`}
   }

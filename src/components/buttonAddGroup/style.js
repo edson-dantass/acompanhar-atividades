@@ -5,6 +5,7 @@ export const Container = styled.div`
   padding: 1em 0;
 
   button {
+    margin-left: 1em;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;

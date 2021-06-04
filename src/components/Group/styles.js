@@ -98,6 +98,7 @@ export const Container = styled.div`
     min-height: 200px;
     padding: 0.5em;
     /* background: #d9dcff; */
+    margin: 0 !important;
     border-radius: 2px;
     overflow-y: auto;
     max-height: calc(100vh - 224px);

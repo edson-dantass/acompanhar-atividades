@@ -8,6 +8,7 @@ import { index } from "../../services/api";
 import PainelContext from "./context";
 import immer from "immer";
 import ButtonAddGroup from "../ButtonAddGroup";
+import { ModalContext } from "../../Hooks/Modal";
 
 // Painel principal com colunas e cards
 
@@ -28,13 +29,13 @@ const Painel = () => {
   function moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging) {
     setGroups(
       immer(groups, (draft) => {
-        const currentCard = draft[indexGroupCurrent].groupCards[indexCardDragging];
+        const currentCard = draft[indexGroupCurrent].atividade[indexCardDragging];
 
-        draft[indexGroupCurrent].groupCards.splice(indexCardDragging, 1);
+        draft[indexGroupCurrent].atividade.splice(indexCardDragging, 1);
 
-        const localInsert = draft[indexGroupLocalCardDragging].groupCards.length;
+        const localInsert = draft[indexGroupLocalCardDragging].atividade.length;
 
-        draft[indexGroupLocalCardDragging].groupCards.splice(localInsert, 0, currentCard);
+        draft[indexGroupLocalCardDragging].atividade.splice(localInsert, 0, currentCard);
       })
     );
   }
@@ -43,26 +44,27 @@ const Painel = () => {
   function moveCardCurrentGroupe(indexCardDragging, indexCardDownDragging, groupIndex) {
     setGroups(
       immer(groups, (draft) => {
-        const currentCard = draft[groupIndex].groupCards[indexCardDragging];
+        const currentCard = draft[groupIndex].atividade[indexCardDragging];
 
-        draft[groupIndex].groupCards.splice(indexCardDragging, 1);
+        draft[groupIndex].atividade.splice(indexCardDragging, 1);
 
-        draft[groupIndex].groupCards.splice(indexCardDownDragging, 0, currentCard);
+        draft[groupIndex].atividade.splice(indexCardDownDragging, 0, currentCard);
       })
     );
   }
 
-  console.log(groups);
   return (
     <DndProvider backend={HTML5Backend}>
-      <Header />
       <PainelContext.Provider value={{ moveCard, moveCardCurrentGroupe, groups, setGroups }}>
-        <Container>
-          {groups?.map((group, i) => (
-            <Group key={group.id} data={group} groupIndex={i} />
-          ))}
-          <ButtonAddGroup />
-        </Container>
+        <ModalContext>
+          <Header />
+          <Container>
+            {groups?.map((group, i) => (
+              <Group key={group.id} data={group} groupIndex={i} />
+            ))}
+            <ButtonAddGroup />
+          </Container>
+        </ModalContext>
       </PainelContext.Provider>
     </DndProvider>
   );
