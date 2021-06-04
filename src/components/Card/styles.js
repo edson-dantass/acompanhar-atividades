@@ -25,6 +25,15 @@ export const Container = styled.div`
   .card-footer {
     ${(props) => props.isDragging && `opacity: 0;`}
     margin-top: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h6 {
+      text-transform: uppercase;
+      color: #8b8b8b;
+      font-weight: 600;
+    }
     .tag-time {
       font-size: 0.9em;
       color: #fff;

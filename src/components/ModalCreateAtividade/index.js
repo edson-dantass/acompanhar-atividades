@@ -3,7 +3,7 @@ import { IoClose, IoCheckmarkOutline } from "react-icons/io5";
 import { create, index } from "../../services/api";
 import PainelContext from "../Painel/context";
 
-const ContentModalCreateAtividade = ({ modal, setModal }) => {
+const ModalCreateAtividade = ({ modal, setModal }) => {
   const inputRef = React.useRef();
   const { setGroups } = React.useContext(PainelContext);
 
@@ -29,7 +29,10 @@ const ContentModalCreateAtividade = ({ modal, setModal }) => {
         </div>
       </div>
       <div className="modal-body">
-        <input ref={inputRef} type="text" placeholder="Nome da atividade" />
+        <div className="input-field">
+          <label>Descrição da Atividade </label>
+          <input ref={inputRef} type="text" placeholder="Descrição" />
+        </div>
       </div>
       <div className="modal-footer">
         <button type="button" onClick={saveCard}>
@@ -39,4 +42,4 @@ const ContentModalCreateAtividade = ({ modal, setModal }) => {
     </>
   );
 };
-export default ContentModalCreateAtividade;
+export default ModalCreateAtividade;

@@ -74,7 +74,7 @@ const Group = ({ data, groupIndex }) => {
         </div>
         <div className="group-body" ref={dropRef}>
           {groupCards.map((card, index) => (
-            <Card key={card.id} data={card} groupIndex={groupIndex} cardIndex={index} />
+            <Card key={card.id} data={card} groupIndex={groupIndex} cardIndex={index} groupId={data.id} />
           ))}
         </div>
         <div className="group-footer">
@@ -83,7 +83,7 @@ const Group = ({ data, groupIndex }) => {
             onClick={() =>
               setModal({
                 active: true,
-                typeModal: "CREATE",
+                typeModal: "CREATE ATIVIDADE",
                 data: {
                   id: data?.id,
                 },

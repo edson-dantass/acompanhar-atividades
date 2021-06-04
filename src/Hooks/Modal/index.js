@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "./styles";
-import ContentModalCreateAtividade from "../../components/ModalCreateAtividade";
+import ModalCreateAtividade from "../../components/ModalCreateAtividade";
+import ModalEditAtividade from "../../components/ModalEditAtividade";
 
 const ContextModal = React.createContext();
 
@@ -17,7 +18,8 @@ export const ModalContext = ({ children }) => {
       {modal.active && (
         <Container>
           <div className="modal">
-            {modal.typeModal === "CREATE" && <ContentModalCreateAtividade modal={modal} setModal={setModal} />}
+            {modal.typeModal === "CREATE ATIVIDADE" && <ModalCreateAtividade modal={modal} setModal={setModal} />}
+            {modal.typeModal === "EDIT ATIVIDADE" && <ModalEditAtividade modal={modal} setModal={setModal} />}
           </div>
         </Container>
       )}

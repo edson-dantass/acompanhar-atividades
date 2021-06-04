@@ -17,6 +17,7 @@ export async function index(route) {
     return null;
   }
 }
+
 export async function create(route, data) {
   try {
     const response = await axios.post(
@@ -46,6 +47,17 @@ export async function update(route, data) {
         headers: API_OPTIONS,
       }
     );
+
+    return response;
+  } catch (error) {
+    return null;
+  }
+}
+export async function destroy(route) {
+  try {
+    const response = await axios.delete(API_URL + route, {
+      headers: API_OPTIONS,
+    });
 
     return response;
   } catch (error) {

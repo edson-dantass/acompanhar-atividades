@@ -3,21 +3,21 @@ import { Container } from "./styles";
 import { IoTimeOutline } from "react-icons/io5";
 import { useDrag, useDrop } from "react-dnd";
 import PainelContext from "../Painel/context";
+import { useModal } from "../../Hooks/Modal/";
 
 /**
  *
  * @param {Object} props
  * @param {Object} props.options
  * @param {String} props.options.cardDescription Descrição do card
- * @param {"red" | "green"} props.options.cardTagColor Cor da etiqueta de data
- * @param {String} props.options.date Data para conclusão da atividade
  * @param {Number} props.options.index índice do array
  */
 
-const Card = ({ data, groupIndex, cardIndex }) => {
-  const { nome: cardDescription, cardTagColor, date } = data || {};
-  const ref = React.useRef(null);
+const Card = ({ data, groupIndex, cardIndex, groupId }) => {
+  const { nome: cardDescription, dataTermino } = data || {};
   const { moveCard, moveCardCurrentGroupe } = React.useContext(PainelContext);
+  const { setModal } = useModal();
+  const ref = React.useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "CARD",
@@ -70,16 +70,52 @@ const Card = ({ data, groupIndex, cardIndex }) => {
       item.cardIndex = indexCardDownDragging;
     },
   });
+
+  const formatedDate = () => {
+    if (dataTermino) {
+      const date = dataTermino?.split("-").reverse().join("/");
+      return date;
+    }
+  };
+
+  const colorTagDate = () => {
+    if (!data?.finalizado) {
+      const date = new Date(dataTermino?.split("/").reverse().join("/"));
+      const novaData = new Date();
+      return date < novaData ? "red" : "";
+    } else {
+      return "green";
+    }
+  };
+
   dragRef(dropRef(ref));
   return (
     <>
-      <Container ref={ref} isDragging={isDragging}>
+      <Container
+        ref={ref}
+        isDragging={isDragging}
+        onClick={() =>
+          setModal({
+            active: true,
+            typeModal: "EDIT ATIVIDADE",
+            data: {
+              id: data?.id,
+              groupId,
+            },
+          })
+        }
+      >
         <div className="card-body">{cardDescription}</div>
-        {date && (
+        {dataTermino && (
           <div className="card-footer">
-            <div className={`tag-time ${cardTagColor}`}>
-              <IoTimeOutline /> {date}
+            <div className={`tag-time ${colorTagDate()}`}>
+              <IoTimeOutline /> {formatedDate()}
             </div>
+            <h6>
+              {colorTagDate() === "green" && "Finalizado"}
+              {colorTagDate() === "red" && "Em atraso"}
+              {colorTagDate() === "" && "Pendente"}
+            </h6>
           </div>
         )}
       </Container>

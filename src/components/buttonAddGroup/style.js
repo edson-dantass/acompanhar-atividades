@@ -46,5 +46,6 @@ export const Container = styled.div`
     padding: 0.5em;
     border-radius: 4px;
     color: #4b4b4d;
+    margin-left: 1em;
   }
 `;
