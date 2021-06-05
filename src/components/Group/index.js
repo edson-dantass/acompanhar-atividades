@@ -3,7 +3,7 @@ import { IoAdd, IoTrashOutline, IoCreateOutline, IoCheckmarkOutline } from "reac
 import { Container } from "./styles";
 import Card from "../Card";
 import { useDrop } from "react-dnd";
-import { update, index } from "../../services/api";
+import { update, index, destroy } from "../../services/api";
 import PainelContext from "../Painel/context";
 import { useModal } from "../../Hooks/Modal";
 
@@ -25,6 +25,7 @@ const Group = ({ data, groupIndex }) => {
   const [, dropRef] = useDrop({
     accept: "CARD",
     drop: (item, monitor) => ({
+      groupId: data?.id,
       indexGroupCurrent: item.groupIndex,
       indexCardDragging: item.cardIndex,
       indexGroupLocalCardDragging: groupIndex,
@@ -54,6 +55,17 @@ const Group = ({ data, groupIndex }) => {
       handleEditNameGroup();
     }
   }
+
+  async function handleDeleteGroup() {
+    const result = window.confirm("Tem certeza que deseja fazer esta operação ? Isso apagará todas as atividades.");
+    if (result) {
+      await destroy("/grupo/" + data?.id);
+      const response = await index("/grupos");
+      if (response) {
+        setGroups(response.data);
+      }
+    }
+  }
   return (
     <>
       <Container inputName={inputName} ref={dropRef}>
@@ -67,7 +79,7 @@ const Group = ({ data, groupIndex }) => {
               {!inputName && <IoCreateOutline />}
               {inputName && <IoCheckmarkOutline />}
             </div>
-            <div className="action" title="Excluir">
+            <div className="action" title="Excluir" onClick={handleDeleteGroup}>
               <IoTrashOutline className="red" />
             </div>
           </div>

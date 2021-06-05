@@ -1,9 +1,10 @@
 import React from "react";
 import { Container } from "./styles";
-import { IoTimeOutline } from "react-icons/io5";
+import { IoTimeOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { useDrag, useDrop } from "react-dnd";
 import PainelContext from "../Painel/context";
 import { useModal } from "../../Hooks/Modal/";
+import { update } from "../../services/api";
 
 /**
  *
@@ -32,13 +33,27 @@ const Card = ({ data, groupIndex, cardIndex, groupId }) => {
 
       // Verifica se o usuário soltou o Card em uma área de drop
       if (propsResult) {
-        const { indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging } = propsResult;
+        const {
+          indexGroupCurrent,
+          indexGroupLocalCardDragging,
+          indexCardDragging,
+          groupId: idGroupDragged,
+        } = propsResult;
+
         /* Evita disparar a função MoveCard() quando se arrasta por cima de outro card, pois esta função é apenas
         responsável por soltar Cards dentro de grupos e não cards por cima de cards. */
         if (indexGroupCurrent === indexGroupLocalCardDragging) {
           return;
         }
-        moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging);
+
+        async function saveCardOnGroup() {
+          await update("/atividade/" + idGroupDragged, {
+            id: data.id,
+          });
+
+          moveCard(indexGroupCurrent, indexGroupLocalCardDragging, indexCardDragging);
+        }
+        saveCardOnGroup();
       }
     },
   });
@@ -92,6 +107,7 @@ const Card = ({ data, groupIndex, cardIndex, groupId }) => {
   return (
     <>
       <Container
+        cardSuccess={colorTagDate() === "green"}
         ref={ref}
         isDragging={isDragging}
         onClick={() =>
@@ -115,6 +131,7 @@ const Card = ({ data, groupIndex, cardIndex, groupId }) => {
               {colorTagDate() === "green" && "Finalizado"}
               {colorTagDate() === "red" && "Em atraso"}
               {colorTagDate() === "" && "Pendente"}
+              {colorTagDate() === "green" && <IoCheckmarkOutline />}
             </h6>
           </div>
         )}
