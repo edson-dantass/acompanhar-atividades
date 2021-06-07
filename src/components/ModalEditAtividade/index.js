@@ -19,7 +19,6 @@ const ContentModalCreateAtividade = ({ modal, setModal }) => {
     async function getOneAtividade() {
       const response = await index("/atividade/" + modal?.data?.id);
       if (response) {
-        console.log(response);
         setData(response?.data);
         setChecked(response?.data.finalizado);
         setLoad(false);
